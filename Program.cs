@@ -8,7 +8,7 @@ namespace UsingTensorFlowModel
     //Tjek deres properties og vaer sikker paa der staar "Copy to Output Directory: Copy if newer"
     internal class Program
     {
-        //stien til modellens MAPPE
+        //stien til modellens MAPPE, sammenhold det med solution explorer saa skal det nok give mening.
         private static readonly string ModelPath =
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Model", "model.savedmodel");
         //stien til labels
