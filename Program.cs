@@ -23,11 +23,10 @@ namespace UsingTensorFlowModel
 
         static void Main(string[] args)
         {
-            //bruge noget som hedder MLContext - hvad er det? Who knows!
+            //bruge noget som hedder MLContext
             var mlContext = new MLContext();
 
-            //definer image processing pipeline - hvad er det? Who the fuck knows, jeg
-            //faar hjaelp af AI!
+            //definer image processing pipeline
             var pipeline = mlContext.Transforms.LoadImages(outputColumnName: ModelInputName, imageFolder: "", inputColumnName: nameof(ModelInput.ImagePath))
             .Append(mlContext.Transforms.ResizeImages(outputColumnName: ModelInputName, imageWidth: 224, imageHeight: 224, inputColumnName: ModelInputName))
             .Append(mlContext.Transforms.ExtractPixels(outputColumnName: ModelInputName, interleavePixelColors: true, offsetImage: 127.5f, scaleImage: 1 / 127.5f))
@@ -37,13 +36,13 @@ namespace UsingTensorFlowModel
                 inputColumnNames: new[] { ModelInputName },
                 addBatchDimensionInput: true));
 
-            //lav en prediction engine - do i have to repeat myself???
+            //lav en prediction engine
             var emptyData = mlContext.Data.LoadFromEnumerable(new List<ModelInput>());
             var model = pipeline.Fit(emptyData);
 
             var predictionEngine = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(model);
 
-            //load labels og lav forudsigelsen!
+            //load labels og lav skønnet!
             var labels = File.ReadAllLines(LabelsPath);
             //flg. skal vaere dit eget testbillede og det skal vaere tilfoejet til projektet
             var imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.jpeg");
